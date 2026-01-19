@@ -4,7 +4,7 @@ require('dotenv').config();
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const model = genAI.getGenerativeModel({ 
-    model: "gemini-1.5-flash", // Go back to 1.5 (which has Free Tier availability)
+    model: "gemini-pro", // Go back to 1.5 (which has Free Tier availability)
     generationConfig: {
         temperature: 0.7,
      },
