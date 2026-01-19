@@ -1,21 +1,25 @@
-const { GoogleGenerativeAI } = require('@google/generative-ai');
+const { GoogleGenAI } = require('@google/genai');
 require('dotenv').config();
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-
-const model = genAI.getGenerativeModel({ 
-    model: "gemini-2.5-pro", // Go back to 1.5 (which has Free Tier availability)
-    generationConfig: {
-        temperature: 0.7,
-     },
-    systemInstruction: "You are a helpful AI assistant. Answer concisely and clearly."
-}, { apiVersion: 'v1beta' }); // <--- KEEP THIS. It is required for 1.5 to work.
+// Initialize the new client with your API Key
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 async function askGemini(prompt) {
   try {
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    return response.text();
+    // Use the new SDK syntax
+    const response = await ai.models.generateContent({
+      model: "gemini-3-flash-preview", // The new 2026 model
+      contents: prompt,
+      config: {
+        temperature: 0.7,
+        // In the new SDK, system instructions go inside 'config'
+        systemInstruction: "You are a helpful AI assistant. Answer concisely and clearly."
+      }
+    });
+
+    // In the new SDK, .text is a property, not a function
+    return response.text; 
+    
   } catch (err) {
     console.error('❌ Gemini API Error:', err.message);
     return "I'm having trouble connecting to my brain right now. Please try again later.";
@@ -23,4 +27,3 @@ async function askGemini(prompt) {
 }
 
 module.exports = askGemini;
-

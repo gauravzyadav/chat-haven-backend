@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@clerk/backend": "^2.5.0",
+    "@google/genai": "^1.37.0",
     "@google/generative-ai": "^0.5.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.0",
