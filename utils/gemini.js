@@ -24,4 +24,3 @@ async function askGemini(prompt) {
 
 module.exports = askGemini;
 
-gemini-3-flash-preview
