@@ -3,14 +3,13 @@ require('dotenv').config();
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-// USE THIS MODEL CONFIGURATION
 const model = genAI.getGenerativeModel({ 
-    model: "gemini-2.0-flash-lite", // Switch to the 'Lite' version (more likely to be free/available)
+    model: "gemini-1.5-flash", // Go back to 1.5 (which has Free Tier availability)
     generationConfig: {
         temperature: 0.7,
      },
     systemInstruction: "You are a helpful AI assistant. Answer concisely and clearly."
-}, { apiVersion: 'v1beta' }); // <--- CRITICAL: Force v1beta endpoint
+}, { apiVersion: 'v1beta' }); // <--- KEEP THIS. It is required for 1.5 to work.
 
 async function askGemini(prompt) {
   try {
@@ -19,7 +18,6 @@ async function askGemini(prompt) {
     return response.text();
   } catch (err) {
     console.error('❌ Gemini API Error:', err.message);
-    // Return a fallback so the app doesn't crash, but log the real error above
     return "I'm having trouble connecting to my brain right now. Please try again later.";
   }
 }
