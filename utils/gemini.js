@@ -3,12 +3,12 @@ require('dotenv').config();
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ 
-    model: "gemini-1.5-flash", 
-    generationConfig: {
-        temperature: 0.7,
-     },
-    systemInstruction: "You are a helpful AI assistant. Answer concisely and clearly."
-});
+  model: "gemini-1.5-flash", 
+  generationConfig: {
+      temperature: 0.7,
+  },
+  systemInstruction: "You are a helpful AI assistant. Answer concisely and clearly."
+}, { apiVersion: 'v1beta' }); // <--- ADD THIS SECOND ARGUMENT
 
 async function askGemini(prompt) {
   try {
